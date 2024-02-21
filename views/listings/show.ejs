@@ -8,16 +8,19 @@
 <body>
     <h3>LISTING DETAILS</h3>
 <UL>
-<LI><%=listing.title%></LI>
-<LI><%=listing.description%></LI>
-<LI><%=listing.price%></LI>
-<LI><%=listing.location%></LI>
-<LI><%=listing.country%></LI>
-
-
+<LI><%=Listing.title%></LI>
+<LI><%=Listing.description%></LI>
+<LI> &#8377; <%=Listing.price.toLocaleString("en-IN")%></LI>
+<LI><%=Listing.location%></LI>
+<LI><%=Listing.country%></LI>
 
 
 </UL>
+<BR>
+
+    <a href="/listings/<%=listings.id%>/edit">edit this listing</a>
+
+
 
 </body>
 </html>

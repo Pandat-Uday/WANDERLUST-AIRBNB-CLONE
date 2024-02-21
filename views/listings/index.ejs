@@ -8,10 +8,16 @@
 <body>
 
     <h2>LISTINGS</h2>
+    <form   method="get"  action="/listings/new">
+
+<button> create new listings</button>
+
+    </form>
     
 <%for (let listing of alllisting) {%>
 
-    <li> <a href="/listings/><%=listing.id%>"> <%=listing.title%></a></li>
+    
+    <li> <a href="/listings/<%=listing.id%>"> <%=listing.title%></a></li>
     
     
     <%}%>

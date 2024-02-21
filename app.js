@@ -29,6 +29,10 @@ async function main(){
     await mongoose.connect(mongo_url);
 }
 
+app.listen(8080,()=>{
+    console.log("server is listening at 8080")
+});
+
 
 app.get("/",(req,res)=>{
     res.send("hey,server is working")
@@ -45,6 +49,19 @@ app.get("/listings",async(req,res)=>{
 
     })
 
+
+//new route
+
+app.get("/listings/new",(req,res)=>{
+    res.render("listings/new.ejs")
+    
+})
+
+
+
+
+
+
 //show route
 
 app.get("/listings/:id", async(req,res)=>{
@@ -56,8 +73,22 @@ app.get("/listings/:id", async(req,res)=>{
 
 })
 
+//create route
 
+app.post("/listings",async(req,res)=>{
+    const newlisting = new listing(req.body.listing);
 
-app.listen(8080,()=>{
-    console.log("server is listening at 8080")
-});
+    await newlisting.save();
+    res.redirect("/listings");
+
+})
+
+//edit route
+
+app.get("/listings/:id/edit",async(req,res)=>{
+    
+    let{id} = req.params;
+   const Listing = await listing.findById(id);
+   res.render("listings/edit.ejs",{Listing})
+
+})

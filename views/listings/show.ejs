@@ -17,10 +17,13 @@
 
 </UL>
 <BR>
-
-    <a href="/listings/<%=listings.id%>/edit">edit this listing</a>
-
-
+<BUTton>
+    <a href="/listings/<%=Listing._id%>/edit">edit this listing</a>
+</BUTton>
+<BR> <BR>
+<form method="POST" action="/listings/<%=Listing._id%>?_method=DELETE">
+    <button>delete this listings</button>
+</form>
 
 </body>
 </html>

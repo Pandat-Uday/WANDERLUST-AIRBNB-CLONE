@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h3>LISTING DETAILS</h3>
+<% layout("/layouts/boilerplate")%>
+
+    
+
+
+    <div class="row mt-3">
+        
+        <div class="col-8 offset-2">
+
+     <h3>    Listing Details</h3>
+        </div>
+    
+<div class="card col-6 offset-2">
+
+    <img src="<%=Listing.image%>" class="card-img-top show-img" alt="listing_image">
+    <div class="card-body">
+      
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary"><%=Listing.title%></a>
+    </div>
+</div>
+
 <UL>
 <LI><%=Listing.title%></LI>
 <LI><%=Listing.description%></LI>
+
 <LI> &#8377; <%=Listing.price.toLocaleString("en-IN")%></LI>
 <LI><%=Listing.location%></LI>
 <LI><%=Listing.country%></LI>
@@ -17,6 +31,7 @@
 
 </UL>
 <BR>
+</div>
 <BUTton>
     <a href="/listings/<%=Listing._id%>/edit">edit this listing</a>
 </BUTton>
@@ -24,6 +39,6 @@
 <form method="POST" action="/listings/<%=Listing._id%>?_method=DELETE">
     <button>delete this listings</button>
 </form>
-
-</body>
-</html>
+<br> <br>
+ 
+ 

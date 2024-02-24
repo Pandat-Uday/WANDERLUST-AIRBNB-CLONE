@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const listing = require("./models/listing.js")
 const path = require("path");
 const methodOverride = require('method-override');
+const ejsMate= require("ejs-mate")
 
 const mongo_url="mongodb://127.0.0.1:27017/wanderlust";
 
@@ -13,6 +14,8 @@ app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
+app.engine("ejs",ejsMate);
+app.use(express.static(path.join(__dirname, "/public")));
 
 main()
 .then(()=>{
@@ -106,7 +109,7 @@ app.put("/listings/:id",async(req,res)=>{
 
 //DELETE ROUTE
 
-app.delete("/lisitngs/:id",async(req,res)=>{
+app.delete("/listIngs/:id",async(req,res)=>{
     let {id} = req.params;
 let deletelist= await listing.findByIdAndDelete(id)
 console.log(deletelist)
@@ -114,3 +117,4 @@ res.redirect("/listings")
 
 
 })
+

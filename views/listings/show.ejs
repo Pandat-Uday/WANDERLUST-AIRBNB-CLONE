@@ -15,30 +15,34 @@
     <img src="<%=Listing.image%>" class="card-img-top show-img" alt="listing_image">
     <div class="card-body">
       
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary"><%=Listing.title%></a>
+      <p class="card-text">
+       <b> <%=Listing.title%> </b> <br>
+       <%=Listing.description%><br>
+
+    &#8377; <%=Listing.price.toLocaleString("en-IN")%> <br>
+   <%=Listing.location%> <br>
+   <%=Listing.country%><br>
+
+
+    </p>
+      
     </div>
 </div>
+<br> <br> <br>
+    <div class="btns">
+        
+    
+     <a href="/listings/<%=Listing._id%>/edit" class="btn btn-dark  ">edit this listing</a>
+        
+        <BR> <BR>
+        <form method="POST" action="/listings/<%=Listing._id%>?_method=DELETE " >
+            <button>delete this listings</button>
+        </form>
+        
+    
+    </div>
 
-<UL>
-<LI><%=Listing.title%></LI>
-<LI><%=Listing.description%></LI>
-
-<LI> &#8377; <%=Listing.price.toLocaleString("en-IN")%></LI>
-<LI><%=Listing.location%></LI>
-<LI><%=Listing.country%></LI>
-
-
-</UL>
-<BR>
+    <br>
 </div>
-<BUTton>
-    <a href="/listings/<%=Listing._id%>/edit">edit this listing</a>
-</BUTton>
-<BR> <BR>
-<form method="POST" action="/listings/<%=Listing._id%>?_method=DELETE">
-    <button>delete this listings</button>
-</form>
-<br> <br>
- 
+
  

@@ -89,6 +89,10 @@ align-items: space-evenly;
     display: flex;
 }
 
+.show-card{
+    padding-left: 0%;
+    padding-right: 0%;
+}
 
 .card{
 

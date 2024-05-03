@@ -10,12 +10,12 @@
         <div class="col-8 offset-2" >
             <br> <br>
     <h3>Edit your listing</h3>
-    <form method="POST" action="/listings/<%=Listing._id%>?_method=PUT">
+    <form method="POST" action="/listings/<%=Listing._id%>?_method=PUT"  novalidate class="needs-validation">
 
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
 
-            <input name="listing[title]" value="<%=Listing.title%>"  type="text" class="form-control">
+            <input name="listing[title]" value="<%=Listing.title%>"  type="text" class="form-control" required>
     
 
         </div>
@@ -23,7 +23,7 @@
    <div class="md-3">
     
     <label for="description" class="form-label">description</label>
-    <textarea name="listing[description]" class="form-control"  ><%=Listing.description%></textarea>
+    <textarea name="listing[description]" class="form-control"  required ><%=Listing.description%></textarea>
   
 
 
@@ -31,7 +31,7 @@
 
           <div>
             <label for="image" class="form-label">image  link</label>
-            <input name="listing[image]" value="<%=Listing.image.url%>"  class="form-control" type="text">
+            <input name="listing[image]" value="<%=Listing.image.url%>"  class="form-control" type="text" required>
  
           </div>
 
@@ -39,7 +39,7 @@
                <div class="mb-3 col-md-4">
                 
                 <label for="price" class="form-label">price</label>
-                <input name="listing[price]" value="<%=Listing.price%>"  class="form-control" type="number">
+                <input name="listing[price]" value="<%=Listing.price%>"  class="form-control" type="number" required>
  
                </div>
 
@@ -48,7 +48,7 @@
 
             <label for="country" class="form-label">country</label>
          
-        <input name="listing[country]" value="<%=Listing.country%>"  class="form-control" type="text">
+        <input name="listing[country]" value="<%=Listing.country%>"  class="form-control" type="text" required>
         
 
            </div>    
@@ -60,7 +60,7 @@
     <label for="loaction" class="form-label">location</label>
        
 
-    <input name="listing[loaction]" value="<%=Listing.location%>"  class="form-control" type="text">
+    <input name="listing[loaction]" value="<%=Listing.location%>"  class="form-control" type="text" required>
 
 
 
@@ -76,3 +76,5 @@
     
 </div>
 </DIV>
+
+<script src="/css/js/script.js"></script>

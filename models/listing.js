@@ -1,4 +1,5 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
+const review = require("./review");
 const Schema= mongoose.Schema
 
 const listingSchema= new Schema({
@@ -24,6 +25,20 @@ set:(v)=> v===""?"https://images.unsplash.com/photo-1527359443443-84a48aec73d2?c
 price: Number,
 location:String,
 country: String,
+
+reviews:[
+
+
+{
+
+type:Schema.Types.ObjectId,
+ref: "Review"
+
+
+},
+
+
+],
 
 
 });

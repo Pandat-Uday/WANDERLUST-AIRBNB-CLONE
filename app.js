@@ -97,7 +97,7 @@ app.get("/listings/:id", wrapasync (async(req,res)=>{
 
     let{id} = req.params;
    const Listing = await listing.findById(id)
-   res.render("listings/show.ejs",{Listing})
+   res.render("listings/show.ejs",{listing})
 
 
 }))

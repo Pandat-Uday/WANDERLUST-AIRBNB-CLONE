@@ -9,7 +9,7 @@ const methodOverride = require('method-override');
 const ejsMate= require("ejs-mate");
 const wrapasync = require("./utils/wrapasync.js");
 const ExpressError = require("./utils/expresserr.js")
-const { listingSchema}= require("./schema.js")
+const { listingSchema,reviewSchema}= require("./schema.js")
 const Review = require("./models/review.js");
 
 
@@ -69,6 +69,30 @@ const validateListing = (req,res,next)=>{
 }
 
 
+
+
+
+
+const validateReview = (req,res,next)=>{
+    
+    let {error} = reviewSchema.validate(req.error);
+    console.log(result);
+    if(error){
+ 
+     let errMsg = error.details.map((el)=>el.message).join(",");
+     throw new ExpressError(400,result.errMsg)
+    }else{
+     next();
+    }
+ 
+ 
+ 
+ 
+ }
+ 
+ 
+
+
 //index route
 
 app.get("/listings",wrapasync (async(req,res)=>{
@@ -91,14 +115,14 @@ app.get("/listings/new",(req,res)=>{
 
 
 
+
 //show route
 
 app.get("/listings/:id", wrapasync (async(req,res)=>{
 
     let{id} = req.params;
    const Listing = await listing.findById(id)
-   res.render("listings/show.ejs",{listing})
-
+   res.render("listings/show.ejs",{Listing})
 
 }))
 
@@ -173,25 +197,28 @@ res.redirect("/listings")
 
 //review/post route
 
-app.post("/listings/:id/reviews",async(req,res)=>{
+app.post("/listings/:id/review",validateReview,wrapasync(async(req,res)=>{
 
-let listing = await Listing.findById(req.params.id);
+let Listing = await listing.findById(req.params.id);
 let newReview = new Review(req.body.review);
 
 
 
-listing.reviews.push(newReview);
+Listing.reviews.push(newReview);
 
 await newReview.save();
-await listing.save();
+await Listing.save();
 
 
 console.log("new review saved");
-res.send("new review saved");
 
-res.redirect(`/listings/${listing._id}`)
 
-});
+res.redirect(`/listings/${Listing._id}`)
+
+}));
+
+
+
 
 app.all("*",(req,res,next)=>{
 
@@ -202,7 +229,8 @@ app.all("*",(req,res,next)=>{
 
 app.use((err, req, res, next)=>{
     let{statuscode = 500,message = "something went wrong"} = err;
-    res.render("err.ejs");
-
-   // res.status(statuscode).send(message);
+   res.status(statuscode).send(message);
 })
+
+
+

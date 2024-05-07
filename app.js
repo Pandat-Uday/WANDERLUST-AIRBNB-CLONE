@@ -50,21 +50,16 @@ app.get("/",(req,res)=>{
 
 
 
+const validateListing = (req, res, next) => {
 
-const validateListing = (req,res,next)=>{
-    
-   let {error} = listingSchema.validate(req.error);
-   console.log(result);
-   if(error){
+    let { error } = listingSchema.validate(req.error);
+    if (error) {
 
-    let errMsg = error.details.map((el)=>el.message).join(",");
-    throw new ExpressError(400,result.errMsg)
-   }else{
-    next();
-   }
-
-
-
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, error)
+    } else {
+        next();
+    }
 
 }
 
@@ -73,22 +68,61 @@ const validateListing = (req,res,next)=>{
 
 
 
-const validateReview = (req,res,next)=>{
-    
-    let {error} = reviewSchema.validate(req.error);
-    console.log(result);
-    if(error){
- 
-     let errMsg = error.details.map((el)=>el.message).join(",");
-     throw new ExpressError(400,result.errMsg)
-    }else{
-     next();
+const validateReview = (req, res, next) => {
+
+    let { error } = reviewSchema.validate(req.error);
+    if (error) {
+
+        let errMsg = error.details.map((el) => el.message).join(",");
+        throw new ExpressError(400, error)
+    } else {
+        next();
     }
+}
+
+
+
+
+
+
+// const validateListing = (req,res,next)=>{
+    
+//    let {error} = listingSchema.validate(req.error);
+//    console.log(result);
+//    if(error){
+
+//     let errMsg = error.details.map((el)=>el.message).join(",");
+//     throw new ExpressError(400,errMsg)
+//    }else{
+//     next();
+//    }
+
+
+
+
+// }
+
+
+
+
+
+
+// const validateReview = (req,res,next)=>{
+    
+//     let {error} = reviewSchema.validate(req.error);
+//     console.log(result);
+//     if(error){
+ 
+//      let errMsg = error.details.map((el)=>el.message).join(",");
+//      throw new ExpressError(400,errMsg)
+//     }else{
+//      next();
+//     }
  
  
  
  
- }
+//  }
  
  
 
@@ -117,12 +151,13 @@ app.get("/listings/new",(req,res)=>{
 
 
 //show route
+//show route
 
-app.get("/listings/:id", wrapasync (async(req,res)=>{
+app.get("/listings/:id", wrapasync(async (req, res) => {
 
-    let{id} = req.params;
-   const Listing = await listing.findById(id)
-   res.render("listings/show.ejs",{Listing})
+    let { id } = req.params;
+    const Listing = await listing.findById(id).populate("reviews")
+    res.render("listings/show.ejs", { Listing })
 
 }))
 
@@ -216,6 +251,34 @@ console.log("new review saved");
 res.redirect(`/listings/${Listing._id}`)
 
 }));
+
+
+//DELETE REVIEW ROUTE
+
+app.delete("/listing/:id/reviews/:reviewId",wrapasync(async(req,res)=>{
+
+let{id,reviewId} =req.params;
+
+await listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
+await Review.findByIdAndDelete(reviewId);
+
+res.redirect(`/listings/${id}`)
+
+
+
+
+
+
+})
+
+
+
+
+
+
+)
+
+
 
 
 

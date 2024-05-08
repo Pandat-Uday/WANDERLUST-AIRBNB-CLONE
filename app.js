@@ -11,6 +11,7 @@ const wrapasync = require("./utils/wrapasync.js");
 const ExpressError = require("./utils/expresserr.js")
 const { listingSchema,reviewSchema}= require("./schema.js")
 const Review = require("./models/review.js");
+const reviews= require("./router/review.js")
 
 const listings = require("./router/listing.js")
 
@@ -57,113 +58,17 @@ app.get("/",(req,res)=>{
 
 
 
-const validateReview = (req, res, next) => {
-
-    let { error } = reviewSchema.validate(req.error);
-    if (error) {
-
-        let errMsg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, error)
-    } else {
-        next();
-    }
-}
 
 app.use("/listings",listings);
+app.use("listings/:id/review",reviews)
 
 
 
 
-// const validateListing = (req,res,next)=>{
-    
-//    let {error} = listingSchema.validate(req.error);
-//    console.log(result);
-//    if(error){
-
-//     let errMsg = error.details.map((el)=>el.message).join(",");
-//     throw new ExpressError(400,errMsg)
-//    }else{
-//     next();
-//    }
-
-
-
-
-// }
-
-
-
-
-
-
-// const validateReview = (req,res,next)=>{
-    
-//     let {error} = reviewSchema.validate(req.error);
-//     console.log(result);
-//     if(error){
- 
-//      let errMsg = error.details.map((el)=>el.message).join(",");
-//      throw new ExpressError(400,errMsg)
-//     }else{
-//      next();
-//     }
- 
- 
- 
- 
-//  }
  
  
 
-
-//review/post route
-
-app.post("/listings/:id/review",validateReview,wrapasync(async(req,res)=>{
-
-let Listing = await listing.findById(req.params.id);
-let newReview = new Review(req.body.review);
-
-
-
-Listing.reviews.push(newReview);
-
-await newReview.save();
-await Listing.save();
-
-
-console.log("new review saved");
-
-
-res.redirect(`/listings/${Listing._id}`)
-
-}));
-
-
-//DELETE REVIEW ROUTE
-
-app.delete("/listings/:id/reviews/:reviewId",wrapasync(async(req,res)=>{
-
-let{id,reviewId} =req.params;
-
-await listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
-await Review.findByIdAndDelete(reviewId);
-
-res.redirect(`/listings/${id}`)
-
-
-
-
-
-
-})
-
-
-
-
-
-
-)
-
+ 
 
 
 

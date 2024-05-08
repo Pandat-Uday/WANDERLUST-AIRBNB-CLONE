@@ -43,11 +43,6 @@ router.get("/new",(req,res)=>{
 
 
 
-
-
-
-
-//show route
 //show route
 
 router.get("/:id", wrapasync(async (req, res) => {
@@ -79,22 +74,6 @@ const newlisting = new Listing(req.body.listing);
    res.redirect("/listings");
 
    
-   
-   
-   
-   
-   
-   
-    // try{
-    // const newlisting = new listing(req.body.listing);
-
-    // await newlisting.save();
-    // res.redirect("/listings");
-    // }
-    // catch(err){
-    //     next(err); 
-           
-    // }
 }))
 
 //edit route
@@ -128,4 +107,4 @@ res.redirect("/listings")
 }))
 
 
-module.export = router;
+module.exports = router;

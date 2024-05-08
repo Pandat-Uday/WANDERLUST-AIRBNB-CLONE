@@ -60,7 +60,7 @@ app.get("/",(req,res)=>{
 
 
 app.use("/listings",listings);
-app.use("listings/:id/review",reviews)
+app.use("/listings/:id/reviews",reviews)
 
 
 

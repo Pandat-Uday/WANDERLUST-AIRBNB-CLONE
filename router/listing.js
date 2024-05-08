@@ -97,7 +97,7 @@ router.put("/:id",validateListing,wrapasync(async(req,res)=>{
 
 //DELETE ROUTE
 
-router.delete("/listIngs/:id",wrapasync (async(req,res)=>{
+router.delete("/listings/:id",wrapasync (async(req,res)=>{
     let {id} = req.params;
 let deletelist= await listing.findByIdAndDelete(id)
 console.log(deletelist)

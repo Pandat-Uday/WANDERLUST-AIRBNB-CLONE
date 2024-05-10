@@ -71,6 +71,7 @@ const newlisting = new Listing(req.body.listing);
 
 
    await newlisting.save();
+   req.flash("succes","New Listing Created")
    res.redirect("/listings");
 
    

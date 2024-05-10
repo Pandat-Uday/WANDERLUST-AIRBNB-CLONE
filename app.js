@@ -9,9 +9,12 @@ const methodOverride = require('method-override');
 const ejsMate= require("ejs-mate");
 const wrapasync = require("./utils/wrapasync.js");
 const ExpressError = require("./utils/expresserr.js")
+const session = require("express-session")
+const flash = require("connect-flash")
 const { listingSchema,reviewSchema}= require("./schema.js")
 const Review = require("./models/review.js");
 const reviews= require("./router/review.js")
+
 
 const listings = require("./router/listing.js")
 
@@ -23,6 +26,34 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
 app.engine("ejs",ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
+
+
+
+const sessionOptions={
+
+secret : "mysupersecretcode",
+resave : false,
+saveUninitialized : true,
+cookies:{
+
+    expires: Date.now()+7*24*60*60*1000,
+    maxage: 7*24*60*1000,
+    httpOnly:true
+
+}
+
+
+}
+
+app.get("/",(req,res)=>{
+    res.send("hey,server is working")
+})
+
+
+
+app.use(session(sessionOptions));
+app.use(flash())
+
 
 main()
 .then(()=>{
@@ -46,13 +77,15 @@ app.listen(8080,()=>{
 });
 
 
-app.get("/",(req,res)=>{
-    res.send("hey,server is working")
+
+
+
+app.use((req,res,next)=>{
+
+res.locals.succes = req.flash("success");
+next();
+
 })
-
-
-
-
 
 
 

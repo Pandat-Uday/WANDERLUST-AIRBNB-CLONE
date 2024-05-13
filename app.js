@@ -13,7 +13,10 @@ const session = require("express-session")
 const flash = require("connect-flash")
 const { listingSchema,reviewSchema}= require("./schema.js")
 const Review = require("./models/review.js");
-const reviews= require("./router/review.js")
+const reviews= require("./router/review.js");
+const passport = require ("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js")
 
 
 const listings = require("./router/listing.js")
@@ -53,6 +56,8 @@ app.get("/",(req,res)=>{
 
 app.use(session(sessionOptions));
 app.use(flash())
+
+
 
 
 main()

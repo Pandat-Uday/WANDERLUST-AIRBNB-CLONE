@@ -87,11 +87,13 @@ app.listen(8080,()=>{
 
 app.use((req,res,next)=>{
 
-res.locals.succes = req.flash("success");
-next();
+// res.locals.succes = req.flash("success");
+// next();
+
+res.locals.success = req.flash("success");
+
 
 })
-
 
 
 

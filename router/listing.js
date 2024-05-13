@@ -55,26 +55,40 @@ router.get("/:id", wrapasync(async (req, res) => {
 
 //create route
 
-router.post("/",validateListing,wrapasync (async(req,res,next)=>{
+// router.post("/",validateListing,wrapasync (async(req,res,next)=>{
    
     
-   let result = listingSchema.validate(req.error);
-   console.log(result);
-   if(result.error){
+//    let result = listingSchema.validate(req.error);
+//    console.log(result);
+//    if(result.error){
 
-    throw new ExpressError(400,result.error)
-   }
+//     throw new ExpressError(400,result.error)
+//    }
 
-const newlisting = new Listing(req.body.listing);
-
-
+// const newlisting = new Listing(req.body.listing);
 
 
-   await newlisting.save();
-   req.flash("succes","New Listing Created")
-   res.redirect("/listings");
+
+
+//    await newlisting.save();
+//    req.flash("succes","New Listing Created")
+//    res.redirect("/listings");
 
    
+// }))
+
+
+
+router.post("/", validateListing, wrapasync(async (req, res, next) => {
+
+    let {result} = listingSchema.validate(req.body);
+    if (result) {
+        throw new ExpressError(400, result.error)
+    }
+    const newlisting = new listing(req.body.listing);
+    await newlisting.save();
+    req.flash("success", "New Listing Created")
+    res.redirect("/listings");
 }))
 
 //edit route
